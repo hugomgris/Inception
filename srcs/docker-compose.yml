@@ -5,6 +5,8 @@ networks:
 volumes:
   mariadb_data:
     driver: local
+  wordpress_data:
+    driver: local
 
 services:
   nginx:
@@ -14,7 +16,11 @@ services:
       - 443:443
     depends_on:
       mariadb:
-        condition: service_healty
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    volumes:
+      - wordpress_data:/var/www/html
     env_file:
       - .env
     restart: always
@@ -22,7 +28,7 @@ services:
       - inception
 
   mariadb:
-    buid: ./requirements/mariadb
+    build: ./requirements/mariadb
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -35,3 +41,14 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - inception
