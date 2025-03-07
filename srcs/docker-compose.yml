@@ -9,6 +9,8 @@ volumes:
     driver: local
   redis_data:
     driver: local
+  portainer_data:
+    driver: local
 
 services:
   nginx:
