@@ -66,3 +66,38 @@ services:
       - inception
     volumes:
     - redis_data:/data
+    
+  ftp:
+    build: ./requirements/ftp
+    container_name: ftp
+    ports:
+      - "2121:2121"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wordpress_data:/home/$FTP_USER
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - inception
+
+  adminer:
+    build: ./requirements/adminer
+    container_name: adminer
+    ports:
+      - "8082:8081"
+    restart: always
+    networks:
+      - inception
+      
+  portainer:
+    build: ./requirements/portainer
+    container_name: portainer
+    ports:
+      - "9443:9443"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    networks:
+      - inception

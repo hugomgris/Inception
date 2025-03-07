@@ -1,8 +1,4 @@
 up:
-	@echo "Cleaning up existing Docker resources!"
-	-docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); \
-	docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); \
-	docker network rm $$(docker network ls -q)
 	@echo "Starting containers!"
 	mkdir -p ${HOME}/data/wordpress
 	mkdir -p ${HOME}/data/mysql
@@ -22,6 +18,13 @@ clean:
 	docker compose -f ./srcs/docker-compose.yml down --remove-orphans --rmi all --volumes
 	docker volume prune
 
+fresh:  
+	@echo "Cleaning up existing Docker resources!"
+	-docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); \
+	docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); \
+	docker network rm $$(docker network ls -q)
+	$(MAKE) up
+	
 
 fclean:
 	$(MAKE) clean
