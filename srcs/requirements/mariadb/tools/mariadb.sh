@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #1 Check if env vars are available
-if [ -z "$SQL_ROOT_PASSWORD"] || [ -z "$SQL_DATABASE" ] || [ -z "$SQL_USER" ] || [ -z "$SQL_PASSWORD" ]; then
+if [ -z "$SQL_ROOT_PASSWORD" ] || [ -z "$SQL_DATABASE" ] || [ -z "$SQL_USER" ] || [ -z "$SQL_PASSWORD" ]; then
 	echo "Error: there is one or more required environment variables missing"
 	exit 1
 fi
