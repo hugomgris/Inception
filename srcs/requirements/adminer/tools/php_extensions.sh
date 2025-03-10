@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Install necessary PHP extensions
 apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
